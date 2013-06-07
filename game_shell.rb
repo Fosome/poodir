@@ -7,6 +7,8 @@ Dir[File.dirname(__FILE__) + '/lib/*'].each { |f| require f }
 class GameShell
   EXIT_OPTS = %w( q quit exit)
 
+  attr_reader :state
+
   def initialize(state)
     @state = state
   end
@@ -26,27 +28,23 @@ class GameShell
   end
 
   def render_state
-    puts @state.output
-    puts @state.player_status
-    puts @state.menu
-    print_prompt
-  end
-
-  def print_prompt
-    print '$ '
-    $stdout.flush
+    state.render
   end
 
   def read_input
+    # print a prompt
+    print '$ '
+    $stdout.flush
+
     @input = STDIN.gets.chomp
   end
 
   def execute
     if EXIT_OPTS.include?(@input)
+      state.finish
       @exit = true
-      puts 'Exiting game.'
     else
-      @state.input(@input)
+      state.input(@input)
     end
   end
 end

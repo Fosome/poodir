@@ -11,4 +11,7 @@ player = Player.new(health: 10, strength: 1, magic: 5, weapon: sword)
 baddie = Mob.new(health: 100, strength: 4, weapon: club)
 
 
-GameShell.new(Fight.new(player, baddie)).run
+screen = Screen.new
+state  = Fight.new(player: player, baddie: baddie, screen: screen)
+
+GameShell.new(state).run

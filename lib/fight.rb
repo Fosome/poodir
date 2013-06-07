@@ -3,11 +3,12 @@
 #
 
 class Fight
-  attr_reader :player, :baddie
+  attr_reader :player, :baddie, :screen
 
-  def initialize(player, baddie)
-    @player = player
-    @baddie = baddie
+  def initialize(opts)
+    @player = opts.fetch :player
+    @baddie = opts.fetch :baddie
+    @screen = opts.fetch :screen
   end
 
   def input(val)
@@ -20,6 +21,18 @@ class Fight
       nil
     end
   end
+
+  def render
+    screen.render output
+    screen.render player_status
+    screen.render menu
+  end
+
+  def finish
+    screen.render "Exiting"
+  end
+
+  private
 
   def player_status
     <<-END
