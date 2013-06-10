@@ -14,9 +14,9 @@ class Fight
   def input(val)
     @output = case val
     when '1'
-      "Player attacks baddie for #{player.attack(baddie)}"
+      Attack.new(player, baddie).results
     when '2'
-      "Baddie attacks player for #{baddie.attack(player)}"
+      Attack.new(baddie, player).results
     else
       nil
     end
@@ -62,13 +62,8 @@ class Fight
   end
 
   def output
-    <<-END if @output
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-! 
-!   #{@output}
-!
---------------------------------------
-
-    END
+    @output.map do |line|
+      screen.render("!! #{line}")
+    end if @output
   end
 end

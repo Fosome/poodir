@@ -1,4 +1,6 @@
 #
+#
+#
 
 class Mob
   attr_reader :max_health, :health, :strength, :magic, :weapon
@@ -25,16 +27,6 @@ class Mob
     else
       health
     end
-  end
-
-  def attack(baddie)
-    baddie.attacked(Attack.new(self, weapon).damage)
-  end
-
-  def attacked(damage)
-    self.health = self.health - damage
-    after_attacked
-    damage
   end
 
   def after_attacked
