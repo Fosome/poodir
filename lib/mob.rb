@@ -1,7 +1,3 @@
-#
-#
-#
-
 class Mob
   attr_reader :max_health, :health, :strength, :magic, :weapon
   

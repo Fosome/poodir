@@ -6,9 +6,11 @@ class Fight
   attr_reader :player, :baddie, :screen
 
   def initialize(opts)
+    @screen = opts.fetch :screen
     @player = opts.fetch :player
     @baddie = opts.fetch :baddie
-    @screen = opts.fetch :screen
+
+    @output = []
   end
 
   def input(val)
@@ -18,12 +20,13 @@ class Fight
     when '2'
       Attack.new(baddie, player).results
     else
-      nil
+      []
     end
   end
 
   def render
-    screen.render output
+    render_output
+
     screen.render player_status
     screen.render menu
   end
@@ -61,9 +64,9 @@ class Fight
     END
   end
 
-  def output
+  def render_output
     @output.map do |line|
-      screen.render("!! #{line}")
-    end if @output
+      screen.render "!! #{line}"
+    end
   end
 end

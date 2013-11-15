@@ -1,0 +1,8 @@
+.DS_Store
+.rvmrc
+.rspec
+.ruby-version
+.rbenv-version
+/.bundle
+/tmp
+/coverage

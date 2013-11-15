@@ -33,7 +33,7 @@ class Attack
   end
 
   def damage
-    weapon_attack * attack_modifier
+    (weapon_attack * attack_modifier).to_i
   end
 
   def weapon_attack
