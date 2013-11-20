@@ -1,7 +1,13 @@
 require 'spec_helper'
 
 describe Mob do
-  let(:weapon) { double() }
+  let(:weapon) do
+    double(
+      :damage => 2,
+      :magic  => 1
+    )
+  end
+
   subject do
     described_class.new({
       :name     => 'Jaems',
@@ -52,6 +58,12 @@ describe Mob do
       subject.instance_variable_set(:@enraged, true)
 
       subject.enraged?.should == true
+    end
+  end
+
+  describe "#attack_damage" do
+    it "returns a damage calculation" do
+      subject.attack_damage.should == 9
     end
   end
 end

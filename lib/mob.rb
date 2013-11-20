@@ -30,11 +30,24 @@ class Mob
     end
   end
 
-  def after_attacked
-    nil  # no op
-  end
-
   def enraged?
     @enraged
+  end
+
+  def attack_damage
+    (weapon_attack * attack_modifier).to_i
+  end
+
+  def after_attacked
+  end
+
+  private
+
+  def weapon_attack
+    weapon.damage * strength + weapon.magic * magic
+  end
+
+  def attack_modifier
+    enraged? ? 1.25 : 1.0
   end
 end

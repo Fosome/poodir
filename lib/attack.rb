@@ -21,6 +21,8 @@ class Attack
   end
 
   def attack
+    damage = attacker.attack_damage
+
     attacked.health = attacked.health - damage
 
     screen.render "#{attacker} attacks #{attacked} for #{damage} damage"
@@ -30,21 +32,5 @@ class Attack
     attacked.after_attacked
 
     screen.render "#{attacked} enraged!" if attacked.enraged?
-  end
-
-  def weapon
-    attacker.weapon
-  end
-
-  def damage
-    (weapon_attack * attack_modifier).to_i
-  end
-
-  def weapon_attack
-    weapon.damage * attacker.strength + weapon.magic * attacker.magic
-  end
-
-  def attack_modifier
-    attacker.enraged? ? 1.25 : 1.0
   end
 end

@@ -1,27 +1,17 @@
 require 'spec_helper'
 
 describe Attack do
-  let(:weapon) do
-    double(
-      :damage => 10,
-      :magic  => 0
-    )
-  end
-
   let(:attacker) do
     double(
-      :to_s     => 'Jaems',
-      :strength => 1,
-      :magic    => 0,
-      :weapon   => weapon,
-      :enraged? => false
+      :attack_damage => 10,
+      :to_s          => 'Jaems'
     )
   end
 
   let(:attacked) do
     double(
       :to_s           => 'Baddie',
-      :health         => 11,
+      :health         => 100,
       :health=        => nil,
       :after_attacked => nil,
       :enraged?       => true
