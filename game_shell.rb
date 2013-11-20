@@ -5,7 +5,7 @@
 Dir[File.dirname(__FILE__) + '/lib/*'].each { |f| require f }
 
 class GameShell
-  EXIT_OPTS = %w( q quit exit)
+  EXIT_OPTS = %w(q quit exit)
 
   attr_reader :state
 

@@ -10,14 +10,17 @@ describe Attack do
 
   let(:attacker) do
     double(
+      :to_s     => 'Jaems',
       :strength => 1,
       :magic    => 0,
       :weapon   => weapon,
       :enraged? => false
     )
   end
+
   let(:attacked) do
     double(
+      :to_s           => 'Baddie',
       :health         => 11,
       :health=        => nil,
       :after_attacked => nil,
@@ -25,14 +28,21 @@ describe Attack do
     )
   end
 
-  subject { described_class.new(attacker, attacked) }
+  let(:screen) { double(:render => nil) }
 
-  describe "#results" do
-    it "returns an array of attack results" do
-      subject.results.should == [
-        'Player attacks baddie for 10',
-        'Player enraged!'
-      ]
+  subject { described_class.new(attacker, attacked, screen) }
+
+  describe "#execute" do
+    it "performs the attack" do
+      screen.should_receive(:render).with("Jaems attacks Baddie for 10 damage")
+
+      subject.execute
+    end
+
+    it "performs the after attack" do
+      screen.should_receive(:render).with("Baddie enraged!")
+
+      subject.execute
     end
   end
 end

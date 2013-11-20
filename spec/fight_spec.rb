@@ -17,30 +17,28 @@ describe Fight do
     let(:attack) { double() }
 
     it "attacks baddie with player on 1" do
-      attack.should_receive(:results)
-      Attack.stub(:new).with(player, baddie).and_return(attack)
+      attack.should_receive(:execute)
+      Attack.stub(:new).with(player, baddie, screen).and_return(attack)
 
       subject.input('1')
     end
 
     it "attacks player with baddie on 2" do
-      attack.should_receive(:results)
-      Attack.stub(:new).with(baddie, player).and_return(attack)
+      attack.should_receive(:execute)
+      Attack.stub(:new).with(baddie, player, screen).and_return(attack)
 
       subject.input('2')
     end
 
     it "does returns nothing on invalid input" do
-      subject.input('pickles').should == []
+      screen.should_receive(:render).with('Invalid input')
+
+      subject.input('pickles')
     end
   end
 
   describe "#render" do
     it "renders the fight output" do
-      subject.instance_variable_set(:@output, ['Player attacked'])
-
-      screen.should_receive(:render).with("!! Player attacked")
-
       screen.should_receive(:render).with(
     <<-END
 **********   Status   ****************

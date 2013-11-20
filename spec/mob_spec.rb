@@ -4,19 +4,22 @@ describe Mob do
   let(:weapon) { double() }
   subject do
     described_class.new({
-      health:   100,
-      strength: 2,
-      magic:    5,
-      weapon:   weapon
+      :name     => 'Jaems',
+      :health   => 100,
+      :strength => 2,
+      :magic    => 5,
+      :weapon   => weapon
     })
   end
 
+  its(:name)       { should == 'Jaems' }
   its(:max_health) { should == 100 }
   its(:health)     { should == 100 }
   its(:strength)   { should == 2 }
   its(:magic)      { should == 5 }
   its(:weapon)     { should == weapon }
 
+  its(:to_s)           { should == 'Jaems' }
   its(:render)         { should == 'HP: 100' }
   its(:after_attacked) { should be_nil }
 

@@ -1,31 +1,35 @@
 #
 
 class Attack
-  attr_reader :attacker, :attacked
+  attr_reader :attacker, :attacked, :screen
 
-  def initialize(attacker, attacked)
+  def initialize(attacker, attacked, screen)
     @attacker = attacker
     @attacked = attacked
+    @screen   = screen
   end
 
-  def results
-    [attack, after_attack].compact
+  def execute
+    before_attack
+    attack
+    after_attack
   end
 
   private
 
+  def before_attack
+  end
+
   def attack
     attacked.health = attacked.health - damage
-    "Player attacks baddie for #{damage}"
+
+    screen.render "#{attacker} attacks #{attacked} for #{damage} damage"
   end
 
   def after_attack
     attacked.after_attacked
-    if attacked.enraged?
-      "Player enraged!"
-    else
-      nil
-    end
+
+    screen.render "#{attacked} enraged!" if attacked.enraged?
   end
 
   def weapon

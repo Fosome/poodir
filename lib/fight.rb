@@ -14,19 +14,17 @@ class Fight
   end
 
   def input(val)
-    @output = case val
+    case val
     when '1'
-      Attack.new(player, baddie).results
+      Attack.new(player, baddie, screen).execute
     when '2'
-      Attack.new(baddie, player).results
+      Attack.new(baddie, player, screen).execute
     else
-      []
+      screen.render 'Invalid input'
     end
   end
 
   def render
-    render_output
-
     screen.render player_status
     screen.render menu
   end
@@ -62,11 +60,5 @@ class Fight
 --------------------------------------
 
     END
-  end
-
-  def render_output
-    @output.map do |line|
-      screen.render "!! #{line}"
-    end
   end
 end
