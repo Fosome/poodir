@@ -10,11 +10,10 @@ describe Attack do
 
   let(:attacked) do
     double(
-      :to_s           => 'Baddie',
-      :health         => 100,
-      :health=        => nil,
-      :after_attacked => nil,
-      :enraged?       => true
+      :attack_defense  => 1,
+      :health          => 10,
+      :health=         => nil,
+      :to_s            => 'Baddie'
     )
   end
 
@@ -24,13 +23,7 @@ describe Attack do
 
   describe "#execute" do
     it "performs the attack" do
-      screen.should_receive(:render).with("Jaems attacks Baddie for 10 damage")
-
-      subject.execute
-    end
-
-    it "performs the after attack" do
-      screen.should_receive(:render).with("Baddie enraged!")
+      attacked.should_receive(:health=).with(1)
 
       subject.execute
     end

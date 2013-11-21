@@ -17,20 +17,26 @@ class Attack
 
   private
 
+  def log(message)
+    screen.render message
+  end
+
   def before_attack
   end
 
   def attack
-    damage = attacker.attack_damage
+    offense = attacker.attack_damage
+    log "#{attacker} stikes for #{offense}"
+
+    defense = attacked.attack_defense
+    log "#{attacked} defends for #{defense}"
+
+    damage = offense > defense ? offense - defense : 0
 
     attacked.health = attacked.health - damage
-
-    screen.render "#{attacker} attacks #{attacked} for #{damage} damage"
+    log "#{attacker} attacks #{attacked} for #{damage} damage"
   end
 
   def after_attack
-    attacked.after_attacked
-
-    screen.render "#{attacked} enraged!" if attacked.enraged?
   end
 end

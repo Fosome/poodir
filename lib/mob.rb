@@ -16,8 +16,6 @@ class Mob
 
     @weapon = args.fetch(:weapon, Weapon.new)
     @armor  = args.fetch(:armor, Armor.new)
-
-    @enraged = false
   end
 
   def to_s
@@ -25,7 +23,10 @@ class Mob
   end
 
   def render
-    "HP: #{health}"
+    out = "HP: #{health}"
+    out << ", Enraged" if enraged?
+    out << ", Dead" if health == 0
+    out
   end
 
   def health=(health)
@@ -39,14 +40,19 @@ class Mob
   end
 
   def enraged?
-    @enraged
+    false
+  end
+
+  def dead?
+    health == 0
   end
 
   def attack_damage
     (weapon_attack * attack_modifier).to_i
   end
 
-  def after_attacked
+  def attack_defense
+    armor.defense
   end
 
   private
@@ -56,6 +62,6 @@ class Mob
   end
 
   def attack_modifier
-    enraged? ? 1.25 : 1.0
+    1.0
   end
 end

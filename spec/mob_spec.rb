@@ -34,9 +34,27 @@ describe Mob do
   its(:weapon) { should == weapon }
   its(:armor)  { should == armor }
 
-  its(:to_s)           { should == 'Jaems' }
-  its(:render)         { should == 'HP: 100' }
-  its(:after_attacked) { should be_nil }
+  its(:to_s)   { should == 'Jaems' }
+
+  its(:enraged?) { should == false }
+
+  describe "#render" do
+    it "shows the mob health" do
+      subject.render.should == "HP: 100"
+    end
+
+    it "shows enraged status" do
+      subject.stub(:enraged?).and_return(true) #kinda sadface
+
+      subject.render.should == "HP: 100, Enraged"
+    end
+
+    it "shows death status" do
+      subject.health = 0
+
+      subject.render.should == "HP: 0, Dead"
+    end
+  end
 
   describe "#health=" do
     it "sets the health value" do
@@ -58,21 +76,13 @@ describe Mob do
     end
   end
 
-  describe "#enraged?" do
-    it "returns false if the mob is not enraged" do
-      subject.enraged?.should == false
-    end
-
-    it "returns true if the mob is enraged" do
-      subject.instance_variable_set(:@enraged, true)
-
-      subject.enraged?.should == true
-    end
-  end
-
   describe "#attack_damage" do
     it "returns a damage calculation" do
       subject.attack_damage.should == 9
+    end
+
+    it "probably does more testing" do
+      pending
     end
   end
 end
