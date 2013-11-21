@@ -8,13 +8,20 @@ describe Mob do
     )
   end
 
+  let(:armor) do
+    double(
+      :defense => 2
+    )
+  end
+
   subject do
     described_class.new({
       :name     => 'Jaems',
       :health   => 100,
       :strength => 2,
       :magic    => 5,
-      :weapon   => weapon
+      :weapon   => weapon,
+      :armor    => armor
     })
   end
 
@@ -23,7 +30,9 @@ describe Mob do
   its(:health)     { should == 100 }
   its(:strength)   { should == 2 }
   its(:magic)      { should == 5 }
-  its(:weapon)     { should == weapon }
+
+  its(:weapon) { should == weapon }
+  its(:armor)  { should == armor }
 
   its(:to_s)           { should == 'Jaems' }
   its(:render)         { should == 'HP: 100' }

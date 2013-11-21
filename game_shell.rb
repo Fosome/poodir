@@ -14,9 +14,12 @@ class GameShell
   end
 
   def run
+    clear_state
+
     begin
       render_state
       read_input
+      clear_state
       execute
     end while not exit?
   end
@@ -31,8 +34,11 @@ class GameShell
     state.render
   end
 
+  def clear_state
+    state.clear
+  end
+
   def read_input
-    # print a prompt
     print '$ '
     $stdout.flush
 

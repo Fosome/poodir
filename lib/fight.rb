@@ -29,6 +29,10 @@ class Fight
     screen.render menu
   end
 
+  def clear
+    screen.clear
+  end
+
   def finish
     screen.render "Exiting"
   end

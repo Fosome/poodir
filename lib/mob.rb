@@ -1,5 +1,11 @@
 class Mob
-  attr_reader :name, :max_health, :health, :strength, :magic, :weapon
+  attr_reader :name,
+              :max_health,
+              :health,
+              :strength,
+              :magic,
+              :weapon,
+              :armor
   
   def initialize(args={})
     @name       = args.fetch(:name, "Generic Mob")
@@ -7,9 +13,11 @@ class Mob
     @health     = args.fetch(:health, 10)
     @strength   = args.fetch(:strength, 1)
     @magic      = args.fetch(:magic, 1)
-    @weapon     = args.fetch(:weapon, Weapon.new)
 
-    @enraged    = false
+    @weapon = args.fetch(:weapon, Weapon.new)
+    @armor  = args.fetch(:armor, Armor.new)
+
+    @enraged = false
   end
 
   def to_s
