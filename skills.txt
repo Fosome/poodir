@@ -1,0 +1,16 @@
+Melee Skills
+
+-double cut
+-cleave
+-hammer
+-defend
+-rage
+
+
+Magic Skills
+
+-lightning bolt
+-fireball
+-ice spike
+-shell
+-channel

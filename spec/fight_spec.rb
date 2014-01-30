@@ -1,9 +1,31 @@
 require 'spec_helper'
 
 describe Fight do
-  let(:player) { double(:render => 'HP: 10') }
-  let(:baddie) { double(:render => 'HP: 5') }
-  let(:screen) { double() }
+  let(:player) do
+    double('player',
+      :render => 'HP: 10',
+      :skills => [player_attack]
+    )
+  end
+  let(:player_attack) do
+    double('player_attack',
+      :to_s => 'Attack'
+    )
+  end
+
+  let(:baddie) do
+    double('baddie',
+      :render => 'HP: 5',
+      :skills => [baddie_attack]
+    )
+  end
+  let(:baddie_attack) do
+    double('baddie_attack',
+      :to_s => 'Attack'
+    )
+  end
+
+  let(:screen) { double('screen') }
 
   subject do
     described_class.new(
@@ -17,17 +39,9 @@ describe Fight do
     let(:attack) { double() }
 
     it "attacks baddie with player on 1" do
-      attack.should_receive(:execute)
-      Attack.stub(:new).with(player, baddie, screen).and_return(attack)
+      player_attack.should_receive(:execute).with(baddie, screen)
 
       subject.input('1')
-    end
-
-    it "attacks player with baddie on 2" do
-      attack.should_receive(:execute)
-      Attack.stub(:new).with(baddie, player, screen).and_return(attack)
-
-      subject.input('2')
     end
 
     it "does returns nothing on invalid input" do
@@ -44,6 +58,7 @@ describe Fight do
 **********   Status   ****************
 * 
 *  Player  - HP: 10
+*
 *  Baddie  - HP: 5
 *
 --------------------------------------
@@ -55,11 +70,13 @@ describe Fight do
     <<-END
 ===========   Actions   ==============
 |
-|   1. Player attacks baddie
-|   2. Baddie attacks player
+|  - Player -
+|  1. Attack
 |
+|  - Baddie -
+|  2. Attack
 |
-|   q or quit. Exit game
+|  q or quit. Exit game
 |
 --------------------------------------
 

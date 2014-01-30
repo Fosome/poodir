@@ -1,7 +1,3 @@
-#
-#
-#
-
 class Weapon
   attr_reader :type, :damage, :magic
 

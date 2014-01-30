@@ -9,16 +9,16 @@ class Fight
     @screen = opts.fetch :screen
     @player = opts.fetch :player
     @baddie = opts.fetch :baddie
-
-    @output = []
   end
 
   def input(val)
     case val
     when '1'
-      Attack.new(player, baddie, screen).execute
+      player.skills[0].execute(baddie, screen)
     when '2'
-      Attack.new(baddie, player, screen).execute
+      player.skills[1].execute(baddie, screen)
+    when '3'
+      baddie.skills[0].execute(player, screen)
     else
       screen.render 'Invalid input'
     end
@@ -44,6 +44,7 @@ class Fight
 **********   Status   ****************
 * 
 *  Player  - #{player.render}
+*
 *  Baddie  - #{baddie.render}
 *
 --------------------------------------
@@ -55,14 +56,28 @@ class Fight
     <<-END
 ===========   Actions   ==============
 |
-|   1. Player attacks baddie
-|   2. Baddie attacks player
+|  - Player -
+#{player_menu}
 |
+|  - Baddie -
+#{baddie_menu}
 |
-|   q or quit. Exit game
+|  q or quit. Exit game
 |
 --------------------------------------
 
     END
+  end
+
+  def player_menu
+    player.skills.map.with_index(1) { |skill, index|
+      "|  #{index}. #{skill}"
+    }.join("\n")
+  end
+
+  def baddie_menu
+    baddie.skills.map.with_index(player.skills.count + 1) { |skill, index|
+      "|  #{index}. #{skill}"
+    }.join("\n")
   end
 end

@@ -39,6 +39,10 @@ class Mob
     end
   end
 
+  def skills
+    @skills ||= [Attack.new(self)]
+  end
+
   def enraged?
     false
   end
@@ -53,6 +57,10 @@ class Mob
 
   def attack_defense
     armor.defense
+  end
+
+  def magic_damage
+    magic
   end
 
   private

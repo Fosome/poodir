@@ -1,42 +1,28 @@
-#
-
 class Attack
-  attr_reader :attacker, :attacked, :screen
+  attr_reader :owner
 
-  def initialize(attacker, attacked, screen)
-    @attacker = attacker
-    @attacked = attacked
-    @screen   = screen
+  def initialize(mob)
+    @owner = mob
   end
 
-  def execute
-    before_attack
-    attack
-    after_attack
-  end
+  def execute(target, screen)
+    offense = owner.attack_damage
+    screen.render "#{owner} stikes for #{offense}"
 
-  private
-
-  def log(message)
-    screen.render message
-  end
-
-  def before_attack
-  end
-
-  def attack
-    offense = attacker.attack_damage
-    log "#{attacker} stikes for #{offense}"
-
-    defense = attacked.attack_defense
-    log "#{attacked} defends for #{defense}"
+    defense = target.attack_defense
+    screen.render "#{target} defends for #{defense}"
 
     damage = offense > defense ? offense - defense : 0
 
-    attacked.health = attacked.health - damage
-    log "#{attacker} attacks #{attacked} for #{damage} damage"
+    target.health = target.health - damage
+    screen.render "#{owner} attacks #{target} for #{damage} damage"
   end
 
-  def after_attack
+  def to_s
+    'Attack'
+  end
+
+  def description
+    'A melee attack with equiped weapon'
   end
 end
